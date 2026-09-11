@@ -23,6 +23,10 @@ if (-not $sourceFiles) {
     throw "No Ashes of the Empire world files found in $worlds"
 }
 
+Get-ChildItem -LiteralPath $worlds -File |
+    Where-Object { $_.Name.StartsWith($targetName + '..', [StringComparison]::OrdinalIgnoreCase) } |
+    Remove-Item -Force
+
 foreach ($sourceFile in $sourceFiles) {
     $extension = $sourceFile.Name.Substring($sourceName.Length)
     Copy-Item -LiteralPath $sourceFile.FullName -Destination ($targetPrefix + $extension) -Force
@@ -44,6 +48,11 @@ $campaign.Instances[0].Header.Summary = 'Defend a fixed Ashes foothold against e
 $campaign.Instances[0].Header.CampaignHeader.Hash = ''
 $campaign.Instances[0].Header.CommonSettings.AvatarAutoSpawn = 1
 $campaign.Instances[0].Header.CommonSettings.BlueprintSpawningOptions = 3
+$campaign.Instances[0].Header.CommonSettings.DiplomacyMode = 0
+$campaign.Instances[0].Header.CommonSettings.DiplomacyMeetingTime = 0
+$campaign.Instances[0].Header.CommonSettings.DisplayRelationshipMatrix = $false
+$campaign.Instances[0].Header.CommonSettings.DisplayReinforcementsInMenu = $false
+$campaign.Instances[0].Header.CommonSettings.DisplayEnemiesInMenu = $false
 $campaign | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $campaignPath -Encoding utf8
 
 Write-Output "Installed separate campaign: $targetName"
