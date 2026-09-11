@@ -16,7 +16,8 @@ if (-not (Test-Path -LiteralPath $worlds -PathType Container)) {
 $sourceFiles = Get-ChildItem -LiteralPath $worlds -File |
     Where-Object {
         $_.Name.StartsWith($sourceName + '.', [StringComparison]::OrdinalIgnoreCase) -and
-        $_.Name -notmatch '_backup$'
+        $_.Name -notmatch '_backup$' -and
+        $_.Extension -ne '.hash'
     }
 
 if (-not $sourceFiles) {
@@ -27,6 +28,8 @@ Get-ChildItem -LiteralPath $worlds -File |
     Where-Object { $_.Name.StartsWith($targetName + '..', [StringComparison]::OrdinalIgnoreCase) } |
     Remove-Item -Force
 
+Remove-Item -LiteralPath (Join-Path $worlds ($targetName + '.hash')) -Force -ErrorAction SilentlyContinue
+
 foreach ($sourceFile in $sourceFiles) {
     $extension = $sourceFile.Name.Substring($sourceName.Length)
     Copy-Item -LiteralPath $sourceFile.FullName -Destination ($targetPrefix + $extension) -Force
@@ -35,6 +38,8 @@ foreach ($sourceFile in $sourceFiles) {
 $planetPath = $targetPrefix + '.planet'
 $planet = Get-Content -LiteralPath $planetPath -Raw | ConvertFrom-Json
 $planet.Name = 'Hold Your Ground'
+$planet.PlanetIdentifier = [Guid]::NewGuid().ToString()
+$planet.VersionIdentifier = [Guid]::NewGuid().ToString()
 $planet.Summary = 'A fixed-position tower defense campaign based on the Ashes of the Empire world.'
 $planet.CampaignMainMenuPanelText = 'Defend the foothold. Survive escalating enemy waves.'
 $planet.AllowAdventures = $false
@@ -43,6 +48,8 @@ $planet | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $planetPath -Enco
 
 $campaignPath = $targetPrefix + '.campaign'
 $campaign = Get-Content -LiteralPath $campaignPath -Raw | ConvertFrom-Json
+$campaign.Instances[0].Header.Id.Id = Get-Random -Minimum 100000000 -Maximum 2000000000
+$campaign.Instances[0].Header.Guid = [Guid]::NewGuid().ToString()
 $campaign.Instances[0].Header.Name = 'Hold Your Ground'
 $campaign.Instances[0].Header.Summary = 'Defend a fixed Ashes foothold against escalating waves.'
 $campaign.Instances[0].Header.CampaignHeader.Hash = ''
