@@ -5,7 +5,7 @@ namespace WaveDefense
 {
     public static class WaveDefenseScenario
     {
-        public const string StartingStructure = "Neter/Player/starting_fortress";
+        public const string StartingStructure = "Neter/Player/Foot Hold Base";
 
         public static readonly DefensePosition DefensePosition = new DefensePosition(0, 0, 0);
 
@@ -23,7 +23,7 @@ namespace WaveDefense
                 "Blueprints",
                 "Neter",
                 "Player",
-                "starting_fortress.blueprint");
+                "Foot Hold Base.blueprint");
 
             return File.Exists(blueprintPath);
         }

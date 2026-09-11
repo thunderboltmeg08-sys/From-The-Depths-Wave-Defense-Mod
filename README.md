@@ -2,11 +2,11 @@
 
 A fixed-position wave defense mode for From The Depths.
 
-## Milestone 0.2.0
+## Milestone 0.2.1
 
-This milestone defines the fixed defense scenario. It uses the built-in Neter land-campaign starter structure at `Neter/Player/starting_fortress` and reserves world position `(0, 0, 0)` as the defense position.
+This milestone defines the fixed defense scenario using the Ashes of the Empire player land base at `Neter/Player/Foot Hold Base` and reserves world position `(0, 0, 0)` as the defense position.
 
-The game currently exposes the starter structure through campaign data rather than a public runtime spawn method. The next step is to package a custom campaign entry that uses this scenario definition.
+The matching built-in asset is `Foot Hold Base.blueprint`. The game exposes this structure through campaign data rather than a public runtime spawn method. The next step is to package a custom campaign entry that uses this scenario definition.
 
 ## Build
 
