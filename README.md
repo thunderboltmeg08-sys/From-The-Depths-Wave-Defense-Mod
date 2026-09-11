@@ -36,4 +36,4 @@ Copy this repository folder into:
 From_The_Depths_Data\StreamingAssets\Mods\WaveDefense
 ```
 
-The copied folder must contain `plugin.json` and `bin\Debug\WaveDefense.dll`.
+The copied folder must contain `plugin.json` and `WaveDefense.dll`.
