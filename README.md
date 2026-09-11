@@ -48,6 +48,6 @@ Run the setup script from PowerShell:
 
 This creates a new `Hold Your Ground` campaign entry from the installed Ashes world data. It writes new files named `Hold Your Ground.*` and does not replace the normal Ashes of the Empire files. The generated campaign disables diplomacy, council meetings, relationship displays, and normal campaign reinforcement/enemy menus.
 
-The installer assigns unique campaign and planet identifiers so FtD treats Hold Your Ground as a separate load target rather than an Ashes duplicate.
+The installer assigns unique campaign and planet identifiers so FtD treats Hold Your Ground as a separate load target rather than an Ashes duplicate. It applies the fixed-defense settings to both campaign instances, enables map access with no fog of war, and removes the inherited territory grid while retaining faction data for future waves.
 
 After running the script, start FtD and select **Hold Your Ground** from the campaign list. The current milestone provides the separate campaign entry and Ashes foothold setup; escalating wave spawning is the next gameplay milestone.

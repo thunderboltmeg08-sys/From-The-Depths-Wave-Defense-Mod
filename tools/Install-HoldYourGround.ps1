@@ -48,18 +48,23 @@ $planet | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $planetPath -Enco
 
 $campaignPath = $targetPrefix + '.campaign'
 $campaign = Get-Content -LiteralPath $campaignPath -Raw | ConvertFrom-Json
-$campaign.Instances[0].Header.Id.Id = Get-Random -Minimum 100000000 -Maximum 2000000000
-$campaign.Instances[0].Header.Guid = [Guid]::NewGuid().ToString()
-$campaign.Instances[0].Header.Name = 'Hold Your Ground'
-$campaign.Instances[0].Header.Summary = 'Defend a fixed Ashes foothold against escalating waves.'
-$campaign.Instances[0].Header.CampaignHeader.Hash = ''
-$campaign.Instances[0].Header.CommonSettings.AvatarAutoSpawn = 1
-$campaign.Instances[0].Header.CommonSettings.BlueprintSpawningOptions = 3
-$campaign.Instances[0].Header.CommonSettings.DiplomacyMode = 0
-$campaign.Instances[0].Header.CommonSettings.DiplomacyMeetingTime = 0
-$campaign.Instances[0].Header.CommonSettings.DisplayRelationshipMatrix = $false
-$campaign.Instances[0].Header.CommonSettings.DisplayReinforcementsInMenu = $false
-$campaign.Instances[0].Header.CommonSettings.DisplayEnemiesInMenu = $false
+foreach ($instance in $campaign.Instances) {
+    $instance.Header.Id.Id = Get-Random -Minimum 100000000 -Maximum 2000000000
+    $instance.Header.Guid = [Guid]::NewGuid().ToString()
+    $instance.Header.Name = 'Hold Your Ground'
+    $instance.Header.Summary = 'Defend a fixed Ashes foothold against escalating waves.'
+    $instance.Header.CampaignHeader.Hash = ''
+    $instance.Header.CommonSettings.AvatarAutoSpawn = 1
+    $instance.Header.CommonSettings.BlueprintSpawningOptions = 3
+    $instance.Header.CommonSettings.AccessToMap = 1
+    $instance.Header.CommonSettings.FogOfWarType = 0
+    $instance.Header.CommonSettings.DiplomacyMode = 0
+    $instance.Header.CommonSettings.DiplomacyMeetingTime = 0
+    $instance.Header.CommonSettings.DisplayRelationshipMatrix = $false
+    $instance.Header.CommonSettings.DisplayReinforcementsInMenu = $false
+    $instance.Header.CommonSettings.DisplayEnemiesInMenu = $false
+    $instance.Territory.Info = @()
+}
 $campaign | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $campaignPath -Encoding utf8
 
 Write-Output "Installed separate campaign: $targetName"
