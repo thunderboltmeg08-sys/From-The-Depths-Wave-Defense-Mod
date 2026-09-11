@@ -4,7 +4,7 @@ A fixed-position wave defense mode for From The Depths.
 
 ## Milestone 0.2.1
 
-This milestone defines the fixed defense scenario using the Ashes of the Empire player land base at `Neter/Player/Foot Hold Base` and reserves world position `(0, 0, 0)` as the defense position.
+This milestone defines the fixed defense scenario using the Ashes of the Empire player land base at `Neter/Player/Foot Hold Base` and the Ashes campaign default world position `(68.73599, 0, 193.3501)` as the defense position.
 
 The matching built-in asset is `Foot Hold Base.blueprint`. The game exposes this structure through campaign data rather than a public runtime spawn method. The next step is to package a custom campaign entry that uses this scenario definition.
 

@@ -7,7 +7,7 @@ namespace WaveDefense
     {
         public const string StartingStructure = "Neter/Player/Foot Hold Base";
 
-        public static readonly DefensePosition DefensePosition = new DefensePosition(0, 0, 0);
+        public static readonly DefensePosition DefensePosition = new DefensePosition(68.73599, 0, 193.3501);
 
         public static bool HasStartingStructure(string gameRoot)
         {
@@ -31,16 +31,16 @@ namespace WaveDefense
 
     public struct DefensePosition
     {
-        public DefensePosition(int x, int y, int z)
+        public DefensePosition(double x, double y, double z)
         {
             X = x;
             Y = y;
             Z = z;
         }
 
-        public int X { get; }
-        public int Y { get; }
-        public int Z { get; }
+        public double X { get; }
+        public double Y { get; }
+        public double Z { get; }
 
         public override string ToString()
         {
