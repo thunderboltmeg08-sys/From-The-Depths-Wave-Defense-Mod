@@ -2,9 +2,11 @@
 
 A fixed-position wave defense mode for From The Depths.
 
-## Milestone 0.1.0
+## Milestone 0.2.0
 
-This milestone verifies that the native plugin loads in From The Depths. The wave gameplay system is intentionally not implemented yet.
+This milestone defines the fixed defense scenario. It uses the built-in Neter land-campaign starter structure at `Neter/Player/starting_fortress` and reserves world position `(0, 0, 0)` as the defense position.
+
+The game currently exposes the starter structure through campaign data rather than a public runtime spawn method. The next step is to package a custom campaign entry that uses this scenario definition.
 
 ## Build
 

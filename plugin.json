@@ -1,6 +1,6 @@
 {
   "name": "WaveDefense",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "depends": [""],
   "conflicts": [],
   "filename": "bin/Debug/WaveDefense.dll",

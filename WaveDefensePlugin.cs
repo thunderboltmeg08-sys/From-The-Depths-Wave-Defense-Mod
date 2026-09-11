@@ -12,7 +12,11 @@ namespace WaveDefense
 
         public void OnLoad()
         {
-            AdvLogger.LogInfo("WaveDefense loaded. Wave system is ready for implementation.");
+            bool startingStructureFound = WaveDefenseScenario.HasStartingStructure(Environment.CurrentDirectory);
+            AdvLogger.LogInfo("WaveDefense loaded. Starting structure: " +
+                WaveDefenseScenario.StartingStructure + ". Fixed defense position: " +
+                WaveDefenseScenario.DefensePosition + ". Starter asset found: " +
+                startingStructureFound + ".");
         }
 
         public void OnSave()
