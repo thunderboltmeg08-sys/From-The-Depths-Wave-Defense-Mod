@@ -37,3 +37,15 @@ From_The_Depths_Data\StreamingAssets\Mods\WaveDefense
 ```
 
 The copied folder must contain `plugin.json` and `WaveDefense.dll`.
+
+## Install the separate campaign mode
+
+Run the setup script from PowerShell:
+
+```powershell
+.\tools\Install-HoldYourGround.ps1
+```
+
+This creates a new `Hold Your Ground` campaign entry from the installed Ashes world data. It writes new files named `Hold Your Ground.*` and does not replace the normal Ashes of the Empire files.
+
+After running the script, start FtD and select **Hold Your Ground** from the campaign list. The current milestone provides the separate campaign entry and Ashes foothold setup; escalating wave spawning is the next gameplay milestone.
