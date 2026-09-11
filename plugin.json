@@ -1,0 +1,8 @@
+{
+  "name": "WaveDefense",
+  "version": "0.1.0",
+  "depends": [""],
+  "conflicts": [],
+  "filename": "bin/Debug/WaveDefense.dll",
+  "gameversion": "6.0.0.60"
+}
