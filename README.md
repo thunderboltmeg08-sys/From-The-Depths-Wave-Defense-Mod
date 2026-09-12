@@ -2,11 +2,23 @@
 
 A fixed-position wave defense mode for From The Depths.
 
-## Milestone 0.2.1
+## Milestone 0.3.0 - Wave Spawning & Scaling Engine
 
-This milestone defines the fixed defense scenario using the Ashes of the Empire player land base at `Neter/Player/Foot Hold Base` and the Ashes campaign default world position `(68.73599, 0, 193.3501)` as the defense position.
+This milestone implements the core wave progression and difficulty engine:
 
-The matching built-in asset is `Foot Hold Base.blueprint`. The game exposes this structure through campaign data rather than a public runtime spawn method. The next step is to package a custom campaign entry that uses this scenario definition.
+- **Adventure Mode Difficulty Scaling**:
+  - Starts at Difficulty 10.
+  - Increases by +10 difficulty each wave up to Difficulty 100.
+  - Above Difficulty 100, difficulty scales linearly rather than proportionally until the foothold is overwhelmed.
+- **Gaussian Design Selection**:
+  - Enemy vehicle selection matches Adventure Mode difficulty scoring (`AdventureModeDifficultyMean` & `AdventureModeDifficultySigma`).
+- **Survival-Based Wave Objectives**:
+  - The objective of each wave is time survival (default 180s per wave), not total enemy destruction.
+  - Player earns material rewards upon surviving each wave, plus full salvage from any enemy units destroyed.
+- **Fixed-Position Spawning**:
+  - Enemy forces spawn on a randomized perimeter around the fixed Ashes foothold position `(68.73599, 0, 193.3501)`.
+- **Intermission Phase**:
+  - A 45s preparation window between waves allows repairing, building, and fortifying defenses with earned materials.
 
 ## Build
 

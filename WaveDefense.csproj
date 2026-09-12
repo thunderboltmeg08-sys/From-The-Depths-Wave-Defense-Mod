@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <Reference Include="Core" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\Core.dll" />
+    <Reference Include="Ftd" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\Ftd.dll" />
     <Reference Include="Modding" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\Modding.dll" />
+    <Reference Include="Ui" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\Ui.dll" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\UnityEngine.CoreModule.dll" />
+    <Reference Include="UnityEngine.IMGUIModule" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\UnityEngine.IMGUIModule.dll" />
+    <Reference Include="UnityEngine.UI" HintPath="$(FtdGamePath)\From_The_Depths_Data\Managed\UnityEngine.UI.dll" />
   </ItemGroup>
 </Project>
