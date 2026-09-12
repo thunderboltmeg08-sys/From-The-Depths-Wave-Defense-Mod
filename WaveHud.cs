@@ -71,7 +71,7 @@ namespace WaveDefense
 
         private void OnGUI()
         {
-            if (!IsVisible) return;
+            if (!IsVisible || !WaveDefenseScenario.IsGameplayScene) return;
 
             // Only show HUD when in a gameplay scene with active constructs in play (NOT in the main menu)
             var activeConstructs = UnityEngine.Object.FindObjectsByType<MainConstructGameObject>(FindObjectsSortMode.None);
@@ -79,6 +79,20 @@ namespace WaveDefense
             {
                 return;
             }
+
+            bool footholdAlive = false;
+            foreach (var constructObject in activeConstructs)
+            {
+                if (constructObject.MainConstruct != null &&
+                    constructObject.MainConstruct.GetBlueprintName().Equals(
+                        WaveDefenseScenario.StartingStructureName, StringComparison.OrdinalIgnoreCase))
+                {
+                    footholdAlive = true;
+                    break;
+                }
+            }
+
+            if (!footholdAlive) return;
 
             var manager = WaveDefensePlugin.WaveManager;
             if (manager == null) return;

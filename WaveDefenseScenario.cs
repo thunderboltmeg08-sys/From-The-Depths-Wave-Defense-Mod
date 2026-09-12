@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 namespace WaveDefense
 {
@@ -7,6 +8,11 @@ namespace WaveDefense
     {
         public const string StartingStructure = "Neter/Player/Foot Hold Base";
         public const string StartingStructureName = "Foot Hold Base";
+
+        public static bool IsGameplayScene
+        {
+            get { return SceneManager.GetActiveScene().buildIndex > 0; }
+        }
 
         public static readonly DefensePosition DefensePosition = new DefensePosition(68.73599, 0, 193.3501);
 

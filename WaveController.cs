@@ -9,6 +9,11 @@ namespace WaveDefense
 
         private void Update()
         {
+            if (!WaveDefenseScenario.IsGameplayScene)
+            {
+                return;
+            }
+
             // Only update wave simulation when actively in a gameplay match with spawned constructs
             var activeConstructs = UnityEngine.Object.FindObjectsByType<MainConstructGameObject>(FindObjectsSortMode.None);
             if (activeConstructs == null || activeConstructs.Length == 0)
