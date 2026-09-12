@@ -7,9 +7,21 @@ namespace WaveDefense
     {
         private void Update()
         {
+            // Only update wave simulation when actively in a gameplay match with spawned constructs
+            var activeConstructs = UnityEngine.Object.FindObjectsByType<MainConstructGameObject>(FindObjectsSortMode.None);
+            if (activeConstructs == null || activeConstructs.Length == 0)
+            {
+                return;
+            }
+
             var manager = WaveDefensePlugin.WaveManager;
             if (manager != null)
             {
+                if (manager.State == WaveState.NotStarted)
+                {
+                    manager.StartGame();
+                }
+
                 manager.Update(Time.deltaTime);
             }
         }

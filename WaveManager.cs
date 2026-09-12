@@ -1,5 +1,6 @@
 using System;
 using BrilliantSkies.Core.Logger;
+using UnityEngine;
 
 namespace WaveDefense
 {
@@ -77,6 +78,31 @@ namespace WaveDefense
 
             AdvLogger.LogInfo(string.Format("=== WAVE {0} STARTED === Difficulty: {1:F1} | Survive for {2:F0}s",
                 CurrentWaveNumber, CurrentTargetDifficulty, Config.WaveDurationSeconds));
+
+            // Execute enemy physical spawning for this wave
+            try
+            {
+                var availableDesigns = Spawner.GetAvailableEnemyDesigns();
+                var selectedDesigns = Spawner.SelectWaveDesigns(availableDesigns, CurrentTargetDifficulty);
+
+                System.Random rng = new System.Random();
+                float baseAngle = (float)(rng.NextDouble() * 360.0);
+
+                for (int i = 0; i < selectedDesigns.Count; i++)
+                {
+                    float angle = (baseAngle + (i * 25f)) % 360f;
+                    Vector3 spawnPos = Spawner.CalculateSpawnPosition(
+                        WaveDefenseScenario.DefensePosition,
+                        Config.SpawnDistance,
+                        angle);
+
+                    Spawner.SpawnEnemyUnit(selectedDesigns[i], spawnPos);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("WaveManager: Error executing wave spawn: " + ex);
+            }
 
             OnWaveStarted?.Invoke(CurrentWaveNumber, CurrentTargetDifficulty);
         }

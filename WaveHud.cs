@@ -73,14 +73,20 @@ namespace WaveDefense
         {
             if (!IsVisible) return;
 
+            // Only show HUD when in a gameplay scene with active constructs in play (NOT in the main menu)
+            var activeConstructs = UnityEngine.Object.FindObjectsByType<MainConstructGameObject>(FindObjectsSortMode.None);
+            if (activeConstructs == null || activeConstructs.Length == 0)
+            {
+                return;
+            }
+
             var manager = WaveDefensePlugin.WaveManager;
             if (manager == null) return;
 
-            // Only show when a game session has started or in progress
+            // When in gameplay and wave state is not started, auto-start the session
             if (manager.State == WaveState.NotStarted)
             {
-                DrawStartPrompt(manager);
-                return;
+                manager.StartGame();
             }
 
             InitStyles();
