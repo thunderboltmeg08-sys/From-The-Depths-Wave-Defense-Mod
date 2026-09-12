@@ -70,6 +70,17 @@ foreach ($instance in $campaign.Instances) {
         $instance.VictoryConditions.GroupConditions = @()
         $instance.VictoryConditions.FullConditions = @()
     }
+    
+    # Clear out the Ashes story events (like the "Junk Trader" lore popup)
+    if ($instance.EventSystem) {
+        $instance.EventSystem.Events = @()
+    }
+
+    # Clean up starting resource zone description if present
+    if ($instance.ResourceZones -and $instance.ResourceZones.Zones.Count -gt 0) {
+        $instance.ResourceZones.Zones[0].Name = "Foothold Stockpile"
+        $instance.ResourceZones.Zones[0].Description = "The primary resource depot supporting your defensive foothold."
+    }
 }
 $campaign | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $campaignPath -Encoding utf8
 
