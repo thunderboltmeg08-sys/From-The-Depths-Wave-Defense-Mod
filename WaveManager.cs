@@ -105,6 +105,15 @@ namespace WaveDefense
             OnIntermissionStarted?.Invoke(seconds);
         }
 
+        public void SkipIntermission()
+        {
+            if (State == WaveState.Intermission)
+            {
+                StateTimeRemaining = 0f;
+                AdvanceToNextWave();
+            }
+        }
+
         public void TriggerDefeat()
         {
             State = WaveState.Defeated;
