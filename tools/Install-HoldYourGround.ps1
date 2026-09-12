@@ -85,12 +85,12 @@ foreach ($instance in $campaign.Instances) {
         $instance.EventSystem.Events = @()
     }
 
-    # Remove the two remote Land Rig fleets and remove Land harvesters from starting player forces
+    # Keep only the player's foothold fleet. Enemy faction designs remain available as
+    # wave templates, but their campaign fleets must not exist or FtD will offer battles.
     if ($instance.Factions -and $instance.Factions.Factions.Count -gt 0) {
         $playerFaction = $instance.Factions.Factions[0]
         if ($playerFaction.Fleets -and $playerFaction.Fleets.Fleets) {
-            # Keep only the main base fleet (The Watering Hole) and remove remote Land Rigs
-            $mainFleets = @($playerFaction.Fleets.Fleets | Where-Object { $_.Name -ne 'Land Rig' })
+            $mainFleets = @($playerFaction.Fleets.Fleets | Where-Object { $_.Name -eq 'The Watering Hole' })
             foreach ($fleet in $mainFleets) {
                 if ($fleet.Forces) {
                     # Filter out Land harvester units from player forces
@@ -98,6 +98,10 @@ foreach ($instance in $campaign.Instances) {
                 }
             }
             $playerFaction.Fleets.Fleets = $mainFleets
+        }
+
+        for ($factionIndex = 1; $factionIndex -lt $instance.Factions.Factions.Count; $factionIndex++) {
+            $instance.Factions.Factions[$factionIndex].Fleets.Fleets = @()
         }
     }
 

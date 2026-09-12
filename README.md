@@ -18,6 +18,7 @@ This milestone adds real-time visual HUD indicators rendered on screen:
 ## Milestone 0.3.4 - Hostile Waves and Foothold Loss
 
 - Wave factions are explicitly hostile to the player in the generated campaign.
+- Enemy campaign fleets are removed; hostile units enter only through the wave spawner in play.
 - The player avatar is not a defeat requirement.
 - The run ends when the `Foot Hold Base` construct is destroyed or removed.
 
