@@ -6,6 +6,7 @@ namespace WaveDefense
     public static class WaveDefenseScenario
     {
         public const string StartingStructure = "Neter/Player/Foot Hold Base";
+        public const string StartingStructureName = "Foot Hold Base";
 
         public static readonly DefensePosition DefensePosition = new DefensePosition(68.73599, 0, 193.3501);
 

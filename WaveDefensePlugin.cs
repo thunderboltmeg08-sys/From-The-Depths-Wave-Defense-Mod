@@ -9,7 +9,7 @@ namespace WaveDefense
     {
         public string name => "WaveDefense";
 
-        public Version version => new Version(0, 3, 2);
+        public Version version => new Version(0, 3, 4);
 
         public static WaveManager? WaveManager { get; private set; }
         public static GameObject? RunnerObject { get; private set; }

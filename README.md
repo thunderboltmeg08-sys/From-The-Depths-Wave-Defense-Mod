@@ -15,6 +15,12 @@ This milestone adds real-time visual HUD indicators rendered on screen:
 - **Persistent Unity Runner**:
   - `WaveController` and `WaveHud` are mounted onto a persistent Unity `GameObject` (`WaveDefense_Runner`) when the mod is loaded by FtD.
 
+## Milestone 0.3.4 - Hostile Waves and Foothold Loss
+
+- Wave factions are explicitly hostile to the player in the generated campaign.
+- The player avatar is not a defeat requirement.
+- The run ends when the `Foot Hold Base` construct is destroyed or removed.
+
 ## Build
 
 From a PowerShell terminal:

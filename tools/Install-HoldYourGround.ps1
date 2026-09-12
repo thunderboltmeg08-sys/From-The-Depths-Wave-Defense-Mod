@@ -64,6 +64,15 @@ foreach ($instance in $campaign.Instances) {
     $instance.Header.CommonSettings.DisplayReinforcementsInMenu = $false
     $instance.Header.CommonSettings.DisplayEnemiesInMenu = $false
     $instance.Header.CommonSettings.DisplayFailureConditions = $false
+
+    # Make every non-player faction hostile to the player for wave combat.
+    if ($instance.Factions -and $instance.Factions.Relationships -and $instance.Factions.Relationships.R) {
+        $relationshipMatrix = $instance.Factions.Relationships.R
+        for ($factionIndex = 1; $factionIndex -lt $relationshipMatrix.Count; $factionIndex++) {
+            $relationshipMatrix[0][$factionIndex] = -100.0
+            $relationshipMatrix[$factionIndex][0] = -100.0
+        }
+    }
     
     # Clear out the normal campaign victory conditions that auto-trigger when enemies/territories are neutralized
     if ($instance.VictoryConditions) {
