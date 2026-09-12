@@ -1,0 +1,9 @@
+{
+  "Authors": "Thund",
+  "Version": "00000000-0000-0000-0000-000000000000",
+  "ComponentId": {
+    "Guid": "7f8b2c45-12d3-4e56-9a78-bcde01234567",
+    "Name": "WaveDefense"
+  },
+  "Description": "Hold Your Ground - Wave Defense Mod for From The Depths"
+}

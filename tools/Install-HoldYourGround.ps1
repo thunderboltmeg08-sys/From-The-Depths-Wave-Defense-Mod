@@ -76,10 +76,29 @@ foreach ($instance in $campaign.Instances) {
         $instance.EventSystem.Events = @()
     }
 
-    # Clean up starting resource zone description if present
+    # Remove the two remote Land Rig fleets and remove Land harvesters from starting player forces
+    if ($instance.Factions -and $instance.Factions.Factions.Count -gt 0) {
+        $playerFaction = $instance.Factions.Factions[0]
+        if ($playerFaction.Fleets -and $playerFaction.Fleets.Fleets) {
+            # Keep only the main base fleet (The Watering Hole) and remove remote Land Rigs
+            $mainFleets = @($playerFaction.Fleets.Fleets | Where-Object { $_.Name -ne 'Land Rig' })
+            foreach ($fleet in $mainFleets) {
+                if ($fleet.Forces) {
+                    # Filter out Land harvester units from player forces
+                    $fleet.Forces = @($fleet.Forces | Where-Object { $_.Name -ne 'Land harvester' })
+                }
+            }
+            $playerFaction.Fleets.Fleets = $mainFleets
+        }
+    }
+
+    # Remove all remote resource rings / material regeneration zones, keeping only the single Foothold Depot
     if ($instance.ResourceZones -and $instance.ResourceZones.Zones.Count -gt 0) {
-        $instance.ResourceZones.Zones[0].Name = "Foothold Stockpile"
-        $instance.ResourceZones.Zones[0].Description = "The primary resource depot supporting your defensive foothold."
+        $footholdZone = $instance.ResourceZones.Zones[0]
+        $footholdZone.Name = "Foothold Stockpile"
+        $footholdZone.Description = "The primary resource depot supporting your defensive foothold."
+        $footholdZone.Material.Growth = 0.0 # Disable passive map-wide regeneration rings
+        $instance.ResourceZones.Zones = @($footholdZone)
     }
 }
 $campaign | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $campaignPath -Encoding utf8
@@ -87,3 +106,20 @@ $campaign | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $campaignPath -
 Write-Output "Installed separate campaign: $targetName"
 Write-Output "Files copied: $($sourceFiles.Count)"
 Write-Output "Campaign file: $campaignPath"
+
+# Also sync and install mod plugin files
+$modDir = Join-Path $GameRoot 'From_The_Depths_Data\StreamingAssets\Mods\WaveDefense'
+if (-not (Test-Path -LiteralPath $modDir)) {
+    New-Item -ItemType Directory -Path $modDir -Force | Out-Null
+}
+$repoRoot = Split-Path -Parent $PSScriptRoot
+if (Test-Path -LiteralPath (Join-Path $repoRoot 'header.header')) {
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'header.header') -Destination (Join-Path $modDir 'header.header') -Force
+}
+if (Test-Path -LiteralPath (Join-Path $repoRoot 'plugin.json')) {
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'plugin.json') -Destination (Join-Path $modDir 'plugin.json') -Force
+}
+if (Test-Path -LiteralPath (Join-Path $repoRoot 'bin\Debug\WaveDefense.dll')) {
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'bin\Debug\WaveDefense.dll') -Destination (Join-Path $modDir 'WaveDefense.dll') -Force
+}
+Write-Output "Installed mod plugin to: $modDir"

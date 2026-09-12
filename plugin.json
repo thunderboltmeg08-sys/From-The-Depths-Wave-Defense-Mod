@@ -1,8 +1,8 @@
 {
   "name": "WaveDefense",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "depends": [""],
   "conflicts": [],
   "filename": "WaveDefense.dll",
-  "gameversion": "6.0.0.60"
+  "gameversion": "6.6.6"
 }
