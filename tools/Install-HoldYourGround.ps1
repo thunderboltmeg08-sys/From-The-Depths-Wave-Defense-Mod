@@ -40,8 +40,8 @@ $planet = Get-Content -LiteralPath $planetPath -Raw | ConvertFrom-Json
 $planet.Name = 'Hold Your Ground'
 $planet.PlanetIdentifier = [Guid]::NewGuid().ToString()
 $planet.VersionIdentifier = [Guid]::NewGuid().ToString()
-$planet.Summary = 'A fixed-position tower defense campaign based on the Ashes of the Empire world.'
-$planet.CampaignMainMenuPanelText = 'Defend the foothold. Survive escalating enemy waves.'
+$planet.Summary = 'A fixed-position wave defense mode based on the Ashes of the Empire world. Stand your ground against relentless enemy waves.'
+$planet.CampaignMainMenuPanelText = 'Defend your foothold against escalating waves of enemy forces. Survive as long as you can.'
 $planet.AllowAdventures = $false
 $planet.AllowStories = $false
 $planet | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $planetPath -Encoding utf8
@@ -52,7 +52,7 @@ foreach ($instance in $campaign.Instances) {
     $instance.Header.Id.Id = Get-Random -Minimum 100000000 -Maximum 2000000000
     $instance.Header.Guid = [Guid]::NewGuid().ToString()
     $instance.Header.Name = 'Hold Your Ground'
-    $instance.Header.Summary = 'Defend a fixed Ashes foothold against escalating waves.'
+    $instance.Header.Summary = "Hold Your Ground - Wave Defense`n`nYou are stationed at a remote foothold on the ash-covered plains. Enemy forces will assault your position in escalating waves. Fortify your base, manage your resources, and survive the onslaught."
     $instance.Header.CampaignHeader.Hash = ''
     $instance.Header.CommonSettings.AvatarAutoSpawn = 1
     $instance.Header.CommonSettings.BlueprintSpawningOptions = 3
@@ -63,7 +63,13 @@ foreach ($instance in $campaign.Instances) {
     $instance.Header.CommonSettings.DisplayRelationshipMatrix = $false
     $instance.Header.CommonSettings.DisplayReinforcementsInMenu = $false
     $instance.Header.CommonSettings.DisplayEnemiesInMenu = $false
-    $instance.Territory.Info = @()
+    $instance.Header.CommonSettings.DisplayFailureConditions = $false
+    
+    # Clear out the normal campaign victory conditions that auto-trigger when enemies/territories are neutralized
+    if ($instance.VictoryConditions) {
+        $instance.VictoryConditions.GroupConditions = @()
+        $instance.VictoryConditions.FullConditions = @()
+    }
 }
 $campaign | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $campaignPath -Encoding utf8
 
