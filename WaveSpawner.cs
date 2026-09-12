@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using BrilliantSkies.Core.Id;
 using BrilliantSkies.Core.Logger;
 using BrilliantSkies.Core.Types;
@@ -14,20 +13,8 @@ namespace WaveDefense
     public class WaveSpawner
     {
         private readonly System.Random _rng = new System.Random();
-        private MethodInfo? _spawnInPlayMethod;
-
         public WaveSpawner()
         {
-            try
-            {
-                _spawnInPlayMethod = typeof(AiUnitSpawner).GetMethod(
-                    "SpawnInPlay",
-                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("WaveSpawner: Could not reflect SpawnInPlay: " + ex);
-            }
         }
 
         /// <summary>
@@ -136,16 +123,13 @@ namespace WaveDefense
                 if (toCenter.sqrMagnitude < 0.01f) toCenter = Vector3.forward;
                 Quaternion rot = Quaternion.LookRotation(toCenter.normalized, Vector3.up);
 
+                var fleetId = new ObjectId(true);
                 var unitSpawner = new AiUnitSpawner(enemyTeam, SpawnStateFlags.IsInPlay, univPos, rot);
-
-                if (_spawnInPlayMethod != null)
+                var spawnedFleet = unitSpawner.SpawnExactThing(design.Id, fleetId);
+                if (spawnedFleet != null)
                 {
-                    object result = _spawnInPlayMethod.Invoke(unitSpawner, new object[] { design, univPos, rot, enemyTeam, null! });
-                    if (result != null)
-                    {
-                        AdvLogger.LogInfo(string.Format("WaveSpawner: Spawned enemy '{0}' at {1}", design.Name, worldPosition));
-                        return true;
-                    }
+                    AdvLogger.LogInfo(string.Format("WaveSpawner: Spawned in-play enemy '{0}' at {1}", design.Name, worldPosition));
+                    return true;
                 }
             }
             catch (Exception ex)
