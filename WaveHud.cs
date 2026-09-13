@@ -150,6 +150,10 @@ namespace WaveDefense
                     manager.Spawner.LastSelectedDesignCount,
                     manager.Spawner.LastAvailableDesignCount,
                     manager.Spawner.LastSpawnStatus), _infoStyle);
+                GUILayout.Label(string.Format("Spawn point: {0:F0}, {1:F0}, {2:F0}",
+                    manager.Spawner.LastSpawnPosition.x,
+                    manager.Spawner.LastSpawnPosition.y,
+                    manager.Spawner.LastSpawnPosition.z), _infoStyle);
             }
             else if (manager.State == WaveState.Defeated)
             {

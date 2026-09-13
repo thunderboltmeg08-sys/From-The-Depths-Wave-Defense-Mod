@@ -26,6 +26,17 @@ namespace WaveDefense
                 return;
             }
 
+            MainConstructGameObject defenseConstruct = activeConstructs[0];
+            foreach (var constructObject in activeConstructs)
+            {
+                if (constructObject.MainConstruct != null &&
+                    constructObject.MainConstruct.GetBlueprintName().IndexOf("Foot Hold Base", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    defenseConstruct = constructObject;
+                    break;
+                }
+            }
+
             bool footholdAlive = false;
             foreach (var constructObject in activeConstructs)
             {
@@ -39,6 +50,7 @@ namespace WaveDefense
             }
 
             var manager = WaveDefensePlugin.WaveManager;
+            manager?.SetDefenseCenter(defenseConstruct.MainThreadPosition);
             if (_footholdSeen && !footholdAlive)
             {
                 manager?.TriggerDefeat();

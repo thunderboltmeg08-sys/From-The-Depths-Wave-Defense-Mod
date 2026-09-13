@@ -17,6 +17,7 @@ namespace WaveDefense
         public int LastAvailableDesignCount { get; private set; }
         public int LastSelectedDesignCount { get; private set; }
         public string LastSpawnStatus { get; private set; } = "Not started";
+        public Vector3 LastSpawnPosition { get; private set; }
         public WaveSpawner()
         {
         }
@@ -131,6 +132,7 @@ namespace WaveDefense
         {
             try
             {
+                LastSpawnPosition = worldPosition;
                 ObjectId enemyTeam = design.Id.FactionId;
                 Vector3d univPos = new Vector3d(worldPosition.x, worldPosition.y, worldPosition.z);
                 Vector3 toCenter = new Vector3(68.73599f, 0f, 193.3501f) - worldPosition;

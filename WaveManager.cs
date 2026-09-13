@@ -23,6 +23,7 @@ namespace WaveDefense
         public float StateTimeRemaining { get; private set; } = 0f;
         public float CurrentTargetDifficulty { get; private set; } = 0f;
         public float TotalMaterialsAwarded { get; private set; } = 0f;
+        public Vector3 DefenseCenter { get; private set; }
 
         public event Action<int, float>? OnWaveStarted;
         public event Action<int, float>? OnWaveSurvived;
@@ -32,6 +33,15 @@ namespace WaveDefense
         {
             Config = config ?? new WaveConfig();
             Spawner = spawner ?? new WaveSpawner();
+            DefenseCenter = new Vector3(
+                (float)WaveDefenseScenario.DefensePosition.X,
+                (float)WaveDefenseScenario.DefensePosition.Y,
+                (float)WaveDefenseScenario.DefensePosition.Z);
+        }
+
+        public void SetDefenseCenter(Vector3 center)
+        {
+            DefenseCenter = center;
         }
 
         public void StartGame()
@@ -95,7 +105,7 @@ namespace WaveDefense
                 {
                     float angle = (baseAngle + (i * 25f)) % 360f;
                     Vector3 spawnPos = Spawner.CalculateSpawnPosition(
-                        WaveDefenseScenario.DefensePosition,
+                        new DefensePosition(DefenseCenter.x, DefenseCenter.y, DefenseCenter.z),
                         Config.SpawnDistance,
                         angle);
 
