@@ -144,7 +144,8 @@ namespace WaveDefense
                 var spawnedFleet = unitSpawner.SpawnExactThing(design.Id, fleetId);
                 if (spawnedFleet != null)
                 {
-                    LastSpawnStatus = "Spawned " + design.Name;
+                    spawnedFleet.PlayFleet();
+                    LastSpawnStatus = "Played " + design.Name + " (forces=" + spawnedFleet.GetForceCountInPlay() + ")";
                     AdvLogger.LogInfo(string.Format("WaveSpawner: Spawned in-play enemy '{0}' at {1}", design.Name, worldPosition));
                     return true;
                 }
