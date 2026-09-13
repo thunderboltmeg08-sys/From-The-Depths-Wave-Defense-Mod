@@ -85,6 +85,9 @@ namespace WaveDefense
                 var availableDesigns = Spawner.GetAvailableEnemyDesigns();
                 var selectedDesigns = Spawner.SelectWaveDesigns(availableDesigns, CurrentTargetDifficulty);
 
+                AdvLogger.LogInfo(string.Format("WaveDefense: found {0} enemy designs, selected {1} for wave {2}.",
+                    Spawner.LastAvailableDesignCount, Spawner.LastSelectedDesignCount, CurrentWaveNumber));
+
                 System.Random rng = new System.Random();
                 float baseAngle = (float)(rng.NextDouble() * 360.0);
 
@@ -97,6 +100,11 @@ namespace WaveDefense
                         angle);
 
                     Spawner.SpawnEnemyUnit(selectedDesigns[i], spawnPos);
+                }
+
+                if (selectedDesigns.Count == 0)
+                {
+                    Debug.LogError("WaveDefense: no enemy designs were available for this wave.");
                 }
             }
             catch (Exception ex)

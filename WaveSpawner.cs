@@ -13,6 +13,10 @@ namespace WaveDefense
     public class WaveSpawner
     {
         private readonly System.Random _rng = new System.Random();
+
+        public int LastAvailableDesignCount { get; private set; }
+        public int LastSelectedDesignCount { get; private set; }
+        public string LastSpawnStatus { get; private set; } = "Not started";
         public WaveSpawner()
         {
         }
@@ -75,6 +79,7 @@ namespace WaveDefense
                 Debug.LogError("WaveSpawner: Error gathering enemy designs: " + ex);
             }
 
+            LastAvailableDesignCount = designs.Count;
             return designs;
         }
 
@@ -99,6 +104,14 @@ namespace WaveDefense
 
             scored.Sort((a, b) => b.Value.CompareTo(a.Value));
 
+            if (scored.Count == 0)
+            {
+                foreach (var design in availableDesigns)
+                {
+                    scored.Add(new KeyValuePair<WorldSpecificationFactionDesign, float>(design, 1f));
+                }
+            }
+
             var selected = new List<WorldSpecificationFactionDesign>();
             int count = Math.Min(maxCount, scored.Count);
 
@@ -107,6 +120,7 @@ namespace WaveDefense
                 selected.Add(scored[i].Key);
             }
 
+            LastSelectedDesignCount = selected.Count;
             return selected;
         }
 
@@ -128,12 +142,16 @@ namespace WaveDefense
                 var spawnedFleet = unitSpawner.SpawnExactThing(design.Id, fleetId);
                 if (spawnedFleet != null)
                 {
+                    LastSpawnStatus = "Spawned " + design.Name;
                     AdvLogger.LogInfo(string.Format("WaveSpawner: Spawned in-play enemy '{0}' at {1}", design.Name, worldPosition));
                     return true;
                 }
+
+                LastSpawnStatus = "FtD returned no fleet for " + design.Name;
             }
             catch (Exception ex)
             {
+                LastSpawnStatus = "Spawn failed: " + ex.GetBaseException().Message;
                 Debug.LogError("WaveSpawner: Failed to spawn unit: " + ex);
             }
 

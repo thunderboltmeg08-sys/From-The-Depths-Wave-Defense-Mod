@@ -146,6 +146,10 @@ namespace WaveDefense
                     manager.CurrentTargetDifficulty), _infoStyle);
                 GUILayout.Label(string.Format("Bounty Earned: +{0:F0} Materials | [F8] Toggle HUD",
                     manager.TotalMaterialsAwarded), _infoStyle);
+                GUILayout.Label(string.Format("Spawned: {0}/{1} | {2}",
+                    manager.Spawner.LastSelectedDesignCount,
+                    manager.Spawner.LastAvailableDesignCount,
+                    manager.Spawner.LastSpawnStatus), _infoStyle);
             }
             else if (manager.State == WaveState.Defeated)
             {
